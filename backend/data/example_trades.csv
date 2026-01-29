@@ -1,0 +1,4 @@
+id,TradeTypeName,SecurityType,Name,Ticker,TradeDate,Quantity,Price,Principal,AllocationQTY,AllocationCash,PortfolioName,CustodianName,StrategyName
+1,Buy,Equity,Apple Inc.,AAPL,01/20/2025,50,190.00,9500.00,50,9500.00,Garfield,CustA,StratGrowth
+2,Sell,Equity,Microsoft Corp.,MSFT,01/22/2025,20,400.00,8000.00,20,8000.00,Heather,CustB,StratTech
+3,Buy,Bond,US Treasury Note,UST,01/23/2025,100,99.00,9900.00,100,9900.00,Garfield,CustA,StratIncome

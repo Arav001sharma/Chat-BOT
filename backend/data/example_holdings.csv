@@ -1,0 +1,4 @@
+AsOfDate,ShortName,PortfolioName,SecurityTypeName,SecName,Qty,Price,MV_Base,PL_DTD,PL_QTD,PL_MTD,PL_YTD
+01/24/2025,Fund A,Garfield,Equity,Apple Inc.,150,195.50,29325.00,150.00,450.00,200.00,1200.00
+01/24/2025,Fund B,Heather,Equity,Microsoft Corp.,100,405.00,40500.00,200.00,600.00,300.00,1800.00
+01/24/2025,Fund C,Garfield,Bond,US Treasury Note,500,98.50,49250.00,50.00,150.00,100.00,400.00
