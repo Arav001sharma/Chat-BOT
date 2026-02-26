@@ -9,17 +9,18 @@ let dataStore = {
     initialized: false
 };
 
+const ensureInitialized = async () => {
+    if (!dataStore.initialized) {
+        dataStore.holdings = await dataLoader.loadHoldings();
+        dataStore.trades = await dataLoader.loadTrades();
+        dataStore.initialized = true;
+    }
+};
+
 // Initialize data
 router.post('/initialize', async (req, res) => {
     try {
-        if (!dataStore.initialized) {
-            const holdings = await dataLoader.loadHoldings();
-            const trades = await dataLoader.loadTrades();
-
-            dataStore.holdings = holdings;
-            dataStore.trades = trades;
-            dataStore.initialized = true;
-        }
+        await ensureInitialized();
 
         res.json({
             success: true,
@@ -42,11 +43,7 @@ router.post('/query', async (req, res) => {
     try {
         const { message } = req.body;
 
-        if (!dataStore.initialized) {
-            return res.status(400).json({
-                error: 'Data not initialized'
-            });
-        }
+        await ensureInitialized();
 
         if (!message || !message.trim()) {
             return res.status(400).json({
@@ -70,11 +67,9 @@ router.post('/query', async (req, res) => {
 });
 
 // Get list of all funds
-router.get('/funds', (req, res) => {
+router.get('/funds', async (req, res) => {
     try {
-        if (!dataStore.initialized) {
-            return res.status(400).json({ error: 'Data not initialized' });
-        }
+        await ensureInitialized();
 
         const holdingsFunds = [...new Set(dataStore.holdings.map(h => h.ShortName))];
         const tradesFunds = [...new Set(dataStore.trades.map(t => t.PortfolioName))];
@@ -89,11 +84,9 @@ router.get('/funds', (req, res) => {
 });
 
 // Get statistics
-router.get('/stats', (req, res) => {
+router.get('/stats', async (req, res) => {
     try {
-        if (!dataStore.initialized) {
-            return res.status(400).json({ error: 'Data not initialized' });
-        }
+        await ensureInitialized();
 
         const uniqueHoldingsFunds = new Set(dataStore.holdings.map(h => h.ShortName)).size;
         const uniqueTradesFunds = new Set(dataStore.trades.map(t => t.PortfolioName)).size;
