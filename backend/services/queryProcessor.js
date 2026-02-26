@@ -49,8 +49,9 @@ class QueryProcessor {
                     result = { answer: "Sorry, cannot find the answer" };
             }
         } catch (error) {
-            console.error('Error processing query:', error);
-            result = { answer: "Sorry, cannot find the answer" };
+            console.error('CRITICAL: Error processing query within intent handlers:', error);
+            console.error('Stack trace:', error.stack);
+            result = { answer: "Sorry, an internal error occurred while processing your question: " + error.message };
         }
 
         return result;
