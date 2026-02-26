@@ -11,11 +11,15 @@ class DataLoader {
     loadHoldings() {
         return new Promise((resolve, reject) => {
             try {
-                if (!fs.existsSync(this.holdingsPath)) {
-                    reject(new Error(`Holdings file not found at ${this.holdingsPath}`));
-                    return;
+                let currentPath = this.holdingsPath;
+                if (!fs.existsSync(currentPath)) {
+                    currentPath = path.join(__dirname, '../data/example_holdings.csv');
+                    if (!fs.existsSync(currentPath)) {
+                        reject(new Error(`Holdings file not found at ${this.holdingsPath} or ${currentPath}`));
+                        return;
+                    }
                 }
-                const fileContent = fs.readFileSync(this.holdingsPath, 'utf-8');
+                const fileContent = fs.readFileSync(currentPath, 'utf-8');
                 const records = csv.parse(fileContent, {
                     columns: true,
                     skip_empty_lines: true,
@@ -45,11 +49,15 @@ class DataLoader {
     loadTrades() {
         return new Promise((resolve, reject) => {
             try {
-                if (!fs.existsSync(this.tradesPath)) {
-                    reject(new Error(`Trades file not found at ${this.tradesPath}`));
-                    return;
+                let currentPath = this.tradesPath;
+                if (!fs.existsSync(currentPath)) {
+                    currentPath = path.join(__dirname, '../data/example_trades.csv');
+                    if (!fs.existsSync(currentPath)) {
+                        reject(new Error(`Trades file not found at ${this.tradesPath} or ${currentPath}`));
+                        return;
+                    }
                 }
-                const fileContent = fs.readFileSync(this.tradesPath, 'utf-8');
+                const fileContent = fs.readFileSync(currentPath, 'utf-8');
                 const records = csv.parse(fileContent, {
                     columns: true,
                     skip_empty_lines: true,
